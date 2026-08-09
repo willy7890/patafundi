@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const API_URL = (import.meta as any).env.VITE_API_URL || 'http://localhost:8000/api/v1'
+const API_URL = (import.meta as any).env?.VITE_API_URL || 'http://localhost:8000/api/v1'
 
 export const api = axios.create({
   baseURL: API_URL,
@@ -26,7 +26,6 @@ api.interceptors.response.use(
       localStorage.removeItem('patafundi_access_token')
       localStorage.removeItem('patafundi_refresh_token')
       localStorage.removeItem('patafundi_user')
-      // Optionally redirect
     }
     return Promise.reject(error)
   }
