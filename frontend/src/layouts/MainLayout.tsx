@@ -9,6 +9,7 @@ export default function MainLayout() {
   const { isAuthenticated, logout } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
+
   const handleLogout = () => {
     logout()
     navigate('/')
