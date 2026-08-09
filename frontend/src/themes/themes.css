@@ -1,0 +1,134 @@
+/* ============================================================
+   PataFundi — 5 Theme System (CSS Variables / Design Tokens)
+   Themes: Classic | Ocean | Forest | Sunset | Midnight
+   ============================================================ */
+
+:root,
+[data-theme="classic"] {
+  --color-brand-50: #f0f9ff;
+  --color-brand-100: #e0f2fe;
+  --color-brand-200: #bae6fd;
+  --color-brand-300: #7dd3fc;
+  --color-brand-400: #38bdf8;
+  --color-brand-500: #0ea5e9;
+  --color-brand-600: #0284c7;
+  --color-brand-700: #0369a1;
+  --color-brand-800: #075985;
+  --color-brand-900: #0c4a6e;
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f8fafc;
+  --color-surface-muted: #f1f5f9;
+  --color-text-primary: #0f172a;
+  --color-text-secondary: #334155;
+  --color-text-muted: #64748b;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+}
+
+[data-theme="ocean"] {
+  --color-brand-50: #eff6ff;
+  --color-brand-100: #dbeafe;
+  --color-brand-200: #bfdbfe;
+  --color-brand-300: #93c5fd;
+  --color-brand-400: #60a5fa;
+  --color-brand-500: #3b82f6;
+  --color-brand-600: #2563eb;
+  --color-brand-700: #1d4ed8;
+  --color-brand-800: #1e40af;
+  --color-brand-900: #1e3a8a;
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f0f7ff;
+  --color-surface-muted: #e8f0fe;
+  --color-text-primary: #0c1a2e;
+  --color-text-secondary: #1e3a5f;
+  --color-text-muted: #4a6fa5;
+  --color-border: #d0e0f5;
+  --color-border-strong: #a8c4e8;
+}
+
+[data-theme="forest"] {
+  --color-brand-50: #f0fdf4;
+  --color-brand-100: #dcfce7;
+  --color-brand-200: #bbf7d0;
+  --color-brand-300: #86efac;
+  --color-brand-400: #4ade80;
+  --color-brand-500: #22c55e;
+  --color-brand-600: #16a34a;
+  --color-brand-700: #15803d;
+  --color-brand-800: #166534;
+  --color-brand-900: #14532d;
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #f0fdf4;
+  --color-surface-muted: #e8f8ee;
+  --color-text-primary: #0a1f12;
+  --color-text-secondary: #1a3d28;
+  --color-text-muted: #3d6b4f;
+  --color-border: #c8e6d4;
+  --color-border-strong: #9ed4b5;
+}
+
+[data-theme="sunset"] {
+  --color-brand-50: #fff7ed;
+  --color-brand-100: #ffedd5;
+  --color-brand-200: #fed7aa;
+  --color-brand-300: #fdba74;
+  --color-brand-400: #fb923c;
+  --color-brand-500: #f97316;
+  --color-brand-600: #ea580c;
+  --color-brand-700: #c2410c;
+  --color-brand-800: #9a3412;
+  --color-brand-900: #7c2d12;
+
+  --color-surface: #ffffff;
+  --color-surface-elevated: #fff7ed;
+  --color-surface-muted: #ffefd9;
+  --color-text-primary: #1c0a00;
+  --color-text-secondary: #3d1f0a;
+  --color-text-muted: #7a4a28;
+  --color-border: #f5d9b8;
+  --color-border-strong: #e8c08a;
+}
+
+[data-theme="midnight"] {
+  --color-brand-50: #eef2ff;
+  --color-brand-100: #e0e7ff;
+  --color-brand-200: #c7d2fe;
+  --color-brand-300: #a5b4fc;
+  --color-brand-400: #818cf8;
+  --color-brand-500: #6366f1;
+  --color-brand-600: #4f46e5;
+  --color-brand-700: #4338ca;
+  --color-brand-800: #3730a3;
+  --color-brand-900: #312e81;
+
+  --color-surface: #0f172a;
+  --color-surface-elevated: #1e293b;
+  --color-surface-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-border-strong: #475569;
+}
+
+/* Dark mode overrides when appearance is dark (except midnight which is already dark) */
+.dark:not([data-theme="midnight"]) {
+  --color-surface: #0f172a;
+  --color-surface-elevated: #1e293b;
+  --color-surface-muted: #334155;
+  --color-text-primary: #f1f5f9;
+  --color-text-secondary: #cbd5e1;
+  --color-text-muted: #94a3b8;
+  --color-border: #334155;
+  --color-border-strong: #475569;
+}
+
+/* Base body styles */
+body {
+  background-color: var(--color-surface);
+  color: var(--color-text-primary);
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
