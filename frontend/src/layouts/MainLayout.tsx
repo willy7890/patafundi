@@ -1,17 +1,14 @@
 import { Outlet, Link, useNavigate } from 'react-router-dom'
-import { Menu, X, User, LogOut, Settings, LayoutDashboard } from 'lucide-react'
+import { Menu, X, LogOut, Settings, LayoutDashboard } from 'lucide-react'
 import { useState } from 'react'
 import { useLanguage } from '../providers/LanguageProvider'
 import { useAuth } from '../providers/AuthProvider'
-import { useTheme } from '../providers/ThemeProvider'
 
 export default function MainLayout() {
   const { t, language, setLanguage } = useLanguage()
-  const { user, isAuthenticated, logout } = useAuth()
-  const { theme } = useTheme()
+  const { isAuthenticated, logout } = useAuth()
   const [mobileOpen, setMobileOpen] = useState(false)
   const navigate = useNavigate()
-
   const handleLogout = () => {
     logout()
     navigate('/')
