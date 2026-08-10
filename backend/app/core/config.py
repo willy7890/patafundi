@@ -26,7 +26,8 @@ class Settings(BaseSettings):
     BACKEND_CORS_ORIGINS: List[str] = [
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "http://localhost:3000",
+        "http://localhost:3000"
+        "https://patafundi.vercel.app",
     ]
 
     REDIS_URL: str = "redis://localhost:6379/0"
