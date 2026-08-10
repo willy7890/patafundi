@@ -7,6 +7,7 @@ import FindFundiPage from './pages/FindFundiPage'
 import TechnicianDetailPage from './pages/TechnicianDetailPage'
 import SettingsPage from './pages/SettingsPage'
 import DashboardPage from './pages/DashboardPage'
+import AdminDashboard from './pages/admin/AdminDashboard'
 import NotFoundPage from './pages/NotFoundPage'
 
 export default function App() {
@@ -18,6 +19,7 @@ export default function App() {
         <Route path="/technicians/:id" element={<TechnicianDetailPage />} />
         <Route path="/settings" element={<SettingsPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
         <Route path="*" element={<NotFoundPage />} />

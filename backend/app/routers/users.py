@@ -1,4 +1,5 @@
 from fastapi import APIRouter, Depends, HTTPException
+from sqlalchemy import or_
 from sqlalchemy.orm import Session
 from app.core.database import get_db
 from app.core.dependencies import get_current_active_user, require_roles
@@ -45,8 +46,55 @@ def update_settings(
 def list_users(
     skip: int = 0,
     limit: int = 50,
+    search: str | None = None,
+    role: UserRole | None = None,
     db: Session = Depends(get_db),
     current_user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
 ):
-    users = db.query(User).offset(skip).limit(limit).all()
+    query = db.query(User)
+    if search:
+        term = f"%{search.strip()}%"
+        query = query.filter(
+            or_(
+                User.full_name.ilike(term),
+                User.email.ilike(term),
+                User.phone.ilike(term),
+            )
+        )
+    if role:
+        query = query.filter(User.role == role)
+    users = query.offset(skip).limit(limit).all()
     return users
+
+
+@router.delete("/{user_id}", response_model=MessageResponse)
+def delete_user(
+    user_id: int,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(require_roles(UserRole.ADMIN, UserRole.SUPER_ADMIN)),
+):
+    if current_user.id == user_id:
+        raise HTTPException(
+            status_code=400,
+            detail="Admins cannot delete their own account",
+        )
+
+    user = db.query(User).filter(User.id == user_id).first()
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+
+    if user.role == UserRole.SUPER_ADMIN:
+        raise HTTPException(
+            status_code=403,
+            detail="Cannot delete super admin account",
+        )
+
+    if user.role == UserRole.ADMIN and current_user.role != UserRole.SUPER_ADMIN:
+        raise HTTPException(
+            status_code=403,
+            detail="Only super admins can delete admin accounts",
+        )
+
+    db.delete(user)
+    db.commit()
+    return MessageResponse(success=True, message="User deleted successfully")

@@ -154,6 +154,16 @@ class ServiceCategoryOut(BaseModel):
     is_active: bool
 
 
+class ServiceCategoryCreate(BaseModel):
+    name_en: str = Field(..., min_length=2, max_length=100)
+    name_sw: str = Field(..., min_length=2, max_length=100)
+    slug: Optional[str] = None
+    icon: Optional[str] = None
+    description_en: Optional[str] = None
+    description_sw: Optional[str] = None
+    is_active: bool = True
+
+
 # ---------- Settings ----------
 class UserSettingsUpdate(BaseModel):
     language: Optional[str] = None

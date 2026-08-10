@@ -19,12 +19,21 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined)
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
-  const [user, setUser] = useState<User | null>(null)
+  const [user, setUser] = useState<User | null>(() => {
+    if (typeof window === 'undefined') return null
+    try {
+      const stored = localStorage.getItem('patafundi_user')
+      return stored ? (JSON.parse(stored) as User) : null
+    } catch {
+      return null
+    }
+  })
   const [isLoading, setIsLoading] = useState(true)
 
   const refreshUser = useCallback(async () => {
     const token = localStorage.getItem('patafundi_access_token')
     if (!token) {
+      localStorage.removeItem('patafundi_user')
       setUser(null)
       setIsLoading(false)
       return

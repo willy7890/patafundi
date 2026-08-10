@@ -29,17 +29,22 @@ class User(Base):
     is_verified_email = Column(Boolean, default=False)
     is_verified_identity = Column(Boolean, default=False)
     profile_photo = Column(String(500), nullable=True)
-    language = Column(String(5), default="sw")  # sw | en
+    language = Column(String(5), default="sw")
     theme = Column(Enum(ThemeName), default=ThemeName.CLASSIC)
     appearance = Column(Enum(AppearanceMode), default=AppearanceMode.SYSTEM)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
-    # Relationships
     technician_profile = relationship(
         "TechnicianProfile", back_populates="user", uselist=False
     )
-    certificates = relationship("Certificate", back_populates="technician")
+    certificates = relationship(
+        "Certificate",
+        back_populates="technician",
+        foreign_keys="Certificate.technician_id",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
 
     def __repr__(self):
         return f"<User {self.full_name} ({self.role})>"
@@ -65,13 +70,16 @@ class TechnicianProfile(Base):
     total_reviews = Column(Integer, default=0)
     completed_jobs = Column(Integer, default=0)
     response_rate = Column(Float, default=100.0)
-    profile_completion = Column(Integer, default=20)  # percentage
+    profile_completion = Column(Integer, default=20)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     user = relationship("User", back_populates="technician_profile")
     services = relationship(
-        "TechnicianService", back_populates="technician_profile"
+        "TechnicianService",
+        back_populates="technician_profile",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
     )
 
     def __repr__(self):
@@ -115,11 +123,6 @@ class TechnicianService(Base):
 
 
 class Certificate(Base):
-    """
-    Optional certificates. Technicians can register and work WITHOUT any certificate.
-    Status starts as NOT_PROVIDED if none uploaded.
-    """
-
     __tablename__ = "certificates"
 
     id = Column(Integer, primary_key=True, index=True)
@@ -129,18 +132,20 @@ class Certificate(Base):
     certificate_number = Column(String(100), nullable=True)
     issue_date = Column(DateTime, nullable=True)
     expiry_date = Column(DateTime, nullable=True)
-    document_path = Column(String(500), nullable=True)  # private storage
+    document_path = Column(String(500), nullable=True)
     status = Column(
         Enum(CertificateStatus), default=CertificateStatus.PENDING_REVIEW
     )
-    verified_by = Column(Integer, ForeignKey("users.id"), nullable=True)
+    verified_by = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
     verified_at = Column(DateTime, nullable=True)
     rejection_reason = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
     technician = relationship(
-        "User", foreign_keys=[technician_id], back_populates="certificates"
+        "User",
+        foreign_keys=[technician_id],
+        back_populates="certificates"
     )
 
     def __repr__(self):
