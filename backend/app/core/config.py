@@ -27,7 +27,7 @@ class Settings(BaseSettings):
         "http://localhost:5173",
         "http://127.0.0.1:5173",
         "http://localhost:3000"
-        "https://patafundi.vercel.app",
+        "https://patafundi-eta.vercel.app/",
     ]
 
     REDIS_URL: str = "redis://localhost:6379/0"
