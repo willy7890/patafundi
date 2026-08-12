@@ -35,12 +35,11 @@ class User(Base):
     created_at = Column(DateTime, default=datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
 
+    # Relationships
     technician_profile = relationship(
-        "TechnicianProfile", back_populates="user", uselist=False
-    )
-        # Relationships
-    technician_profile = relationship(
-        "TechnicianProfile", back_populates="user", uselist=False
+        "TechnicianProfile",
+        back_populates="user",
+        uselist=False,
     )
     certificates = relationship(
         "Certificate",
@@ -72,6 +71,7 @@ class User(Base):
         foreign_keys="[Order.seller_id]",
         back_populates="seller",
     )
+
     def __repr__(self):
         return f"<User {self.full_name} ({self.role})>"
 
@@ -162,7 +162,9 @@ class Certificate(Base):
     status = Column(
         Enum(CertificateStatus), default=CertificateStatus.PENDING_REVIEW
     )
-    verified_by = Column(Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True)
+    verified_by = Column(
+        Integer, ForeignKey("users.id", ondelete="SET NULL"), nullable=True
+    )
     verified_at = Column(DateTime, nullable=True)
     rejection_reason = Column(Text, nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
@@ -171,7 +173,7 @@ class Certificate(Base):
     technician = relationship(
         "User",
         foreign_keys=[technician_id],
-        back_populates="certificates"
+        back_populates="certificates",
     )
 
     def __repr__(self):

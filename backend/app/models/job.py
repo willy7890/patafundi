@@ -87,10 +87,7 @@ class Review(Base):
     is_public = Column(Boolean, default=True)
     created_at = Column(DateTime, default=datetime.utcnow)
 
+    # Relationships — hizi tu zinahitajika
     job = relationship("Job", back_populates="review")
     customer = relationship("User", foreign_keys=[customer_id])
     technician = relationship("User", foreign_keys=[technician_id])
-    category = relationship("ServiceCategory")
-    media = relationship("Media", back_populates="job", cascade="all, delete-orphan")
-    status_history = relationship("JobStatusHistory", back_populates="job", cascade="all, delete-orphan")
-    review = relationship("Review", back_populates="job", uselist=False)
