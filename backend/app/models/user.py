@@ -38,14 +38,40 @@ class User(Base):
     technician_profile = relationship(
         "TechnicianProfile", back_populates="user", uselist=False
     )
+        # Relationships
+    technician_profile = relationship(
+        "TechnicianProfile", back_populates="user", uselist=False
+    )
     certificates = relationship(
         "Certificate",
         back_populates="technician",
-        foreign_keys="Certificate.technician_id",
-        cascade="all, delete-orphan",
-        passive_deletes=True,
+        foreign_keys="[Certificate.technician_id]",
     )
-
+    jobs_as_customer = relationship(
+        "Job",
+        foreign_keys="[Job.customer_id]",
+        back_populates="customer",
+    )
+    jobs_as_technician = relationship(
+        "Job",
+        foreign_keys="[Job.technician_id]",
+        back_populates="technician",
+    )
+    spare_parts = relationship(
+        "SparePart",
+        back_populates="seller",
+        foreign_keys="[SparePart.seller_id]",
+    )
+    orders_as_buyer = relationship(
+        "Order",
+        foreign_keys="[Order.buyer_id]",
+        back_populates="buyer",
+    )
+    orders_as_seller = relationship(
+        "Order",
+        foreign_keys="[Order.seller_id]",
+        back_populates="seller",
+    )
     def __repr__(self):
         return f"<User {self.full_name} ({self.role})>"
 

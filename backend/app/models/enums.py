@@ -48,3 +48,40 @@ class AppearanceMode(str, enum.Enum):
     LIGHT = "light"
     DARK = "dark"
     SYSTEM = "system"
+
+class JobStatus(str, enum.Enum):
+    PENDING = "PENDING"
+    ACCEPTED = "ACCEPTED"
+    REJECTED = "REJECTED"
+    ON_THE_WAY = "ON_THE_WAY"
+    ARRIVED = "ARRIVED"
+    IN_PROGRESS = "IN_PROGRESS"
+    COMPLETED = "COMPLETED"
+    CANCELLED = "CANCELLED"
+    DISPUTED = "DISPUTED"
+
+
+class OrderStatus(str, enum.Enum):
+    PENDING = "PENDING"
+    CONFIRMED = "CONFIRMED"
+    PAID = "PAID"
+    PROCESSING = "PROCESSING"
+    SHIPPED = "SHIPPED"
+    DELIVERED = "DELIVERED"
+    CANCELLED = "CANCELLED"
+    REFUNDED = "REFUNDED"
+
+
+class MediaType(str, enum.Enum):
+    IMAGE = "IMAGE"
+    VIDEO = "VIDEO"
+    DOCUMENT = "DOCUMENT"
+    OTHER = "OTHER"
+
+
+class MediaOwnerType(str, enum.Enum):
+    USER = "USER"
+    JOB = "JOB"
+    SPARE_PART = "SPARE_PART"
+    CERTIFICATE = "CERTIFICATE"
+    REVIEW = "REVIEW"
